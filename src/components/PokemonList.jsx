@@ -1,12 +1,23 @@
 import MOCK_DATA from "../js/mockData";
 import PokemonCard from "./PokemonCard";
 import { styled } from "styled-components";
-const PokemonList = () => {
+
+const PokemonList = ({ handleAddandDel }) => {
   const pokemonData = MOCK_DATA;
+  // const [selectList, setSelectList] = useState([]);
+  //추가and삭제하기 버튼
+
   return (
     <PokemonLists>
       {pokemonData.map((list) => {
-        return <PokemonCard list={list} key={list.id}></PokemonCard>;
+        return (
+          <PokemonCard
+            list={list}
+            key={list.id}
+            context="list"
+            handleAddandDel={handleAddandDel}
+          />
+        );
       })}
     </PokemonLists>
   );
@@ -19,17 +30,4 @@ const PokemonLists = styled.ul`
   align-items: center;
   gap: 30px;
   flex-wrap: wrap;
-  li {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex: 1;
-    gap: 10px;
-    padding: 20px;
-    border-radius: 10px;
-    background: #fff;
-    border: 1px solid #ccc;
-    min-width: calc((100% / 7) - 30px);
-    box-sizing: border-box;
-  }
 `;
