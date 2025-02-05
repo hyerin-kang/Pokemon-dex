@@ -1,19 +1,32 @@
+import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 
 const PokemonCard = ({ list, handleAddandDel, context }) => {
   //아이디 세자리수 정렬
   const setThreeNum = String(list.id).padStart(3, "0");
 
+  //페이지 이동하기
+  const navigate = useNavigate();
+  const handleGotoDetail = (id) => {
+    //디테일페이지로 가고 id를 넘겨줄거임
+    navigate(`/detail?id=${id}`);
+  };
+
+  /*
+  자식이벤트발생 > 부모에 있으면 부모가 실행 : 이벤트 버블링
+  stopPropagation자식에서 이벤트가 버블링되는거 막아줌
+
+  */
+
   return (
-    <PokemonCardLi>
+    <PokemonCardLi onClick={() => handleGotoDetail(list.id)}>
       <img src={`${list.img_url}`} />
       <p>{list.korean_name}</p>
       <p>No. {setThreeNum}</p>
       <button
-        onClick={() => {
-          console.log("삭제추가버튼");
+        onClick={(e) => {
+          e.stopPropagation();
           if (context == "dashboard") {
-            console.log("삭제", context);
             handleAddandDel(list, "delete");
           } else if (context == "list") {
             handleAddandDel(list, "add");
