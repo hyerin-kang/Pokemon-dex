@@ -1,9 +1,12 @@
+import { PokemonProvider } from "./context/pokemonContext";
 import Router from "./shared/Router";
 
 function App() {
   return (
     <>
-      <Router />
+      <PokemonProvider>
+        <Router />
+      </PokemonProvider>
     </>
   );
 }

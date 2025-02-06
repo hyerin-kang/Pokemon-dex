@@ -1,49 +1,20 @@
-import { useState } from "react";
+import { useContext } from "react";
 import PokemonCard from "./PokemonCard";
 import PokemonList from "./PokemonList";
 import { styled } from "styled-components";
 import pokeball from "../image/pokebola-pokeball.png";
+import { PokemonContext } from "../context/pokemonContext";
 
 const DashBoard = () => {
-  const [selectList, setSelectList] = useState([]);
-  //추가삭제기능
-  const handleAddandDel = (pokemonData, action) => {
-    if (action === "add") {
-      if (selectList.length >= 6) {
-        alert("포켓몬은 6마리까지 저장 가능합니다.");
-        return;
-      }
-      const alreadyMy = selectList.some(function (list) {
-        return list === pokemonData;
-      });
-      if (alreadyMy) {
-        alert("해당몬스터를 이미 잡았어요!");
-        return;
-      }
-      // console.log(pokemonData, "pokemonData");
-      setSelectList([...selectList, pokemonData]);
-    } else if (action === "delete") {
-      console.log(action, "action");
-      const deleteList = selectList.filter(function (list) {
-        return list !== pokemonData;
-      });
-      setSelectList(deleteList);
-    }
-  };
+  const { selectList } = useContext(PokemonContext);
+  // console.log(selectList);
   return (
     <Container>
       <h2>나만의 포켓몬</h2>
-      <SelectList>
+      <SelectLists>
         {/* 추가된거 */}
         {selectList.map((list) => {
-          return (
-            <PokemonCard
-              handleAddandDel={handleAddandDel}
-              context="dashboard"
-              list={list}
-              key={list.id}
-            />
-          );
+          return <PokemonCard context="dashboard" list={list} key={list.id} />;
         })}
         {/* 빈슬롯 
         && : 논리AND연산자, 앞에있는 조건이 true일때만 뒤에있는 코드를 실행하도록 한다
@@ -52,8 +23,8 @@ const DashBoard = () => {
           Array.from({ length: 6 - selectList.length }).map((_, index) => {
             return <EmptyList key={index} />;
           })}
-      </SelectList>
-      <PokemonList handleAddandDel={handleAddandDel} />
+      </SelectLists>
+      <PokemonList />
     </Container>
   );
 };
@@ -87,7 +58,7 @@ const EmptyList = styled.li`
     background-size: cover;
   }
 `;
-const SelectList = styled.ul`
+const SelectLists = styled.ul`
   display: flex;
   align-items: stretch;
   justify-content: center;

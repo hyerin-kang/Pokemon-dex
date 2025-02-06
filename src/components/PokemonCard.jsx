@@ -1,7 +1,10 @@
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
+import { PokemonContext } from "../context/pokemonContext";
 
-const PokemonCard = ({ list, handleAddandDel, context }) => {
+const PokemonCard = ({ list, context }) => {
+  const { handleAddandDel } = useContext(PokemonContext);
   //아이디 세자리수 정렬
   const setThreeNum = String(list.id).padStart(3, "0");
 
