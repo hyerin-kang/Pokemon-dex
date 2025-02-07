@@ -1,10 +1,12 @@
-import { useContext } from "react";
+// import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
-import { PokemonContext } from "../context/pokemonContext";
+import { handleAddandDel } from "../slices/pokemonSlice";
+import { useDispatch } from "react-redux";
 
 const PokemonCard = ({ list, context }) => {
-  const { handleAddandDel } = useContext(PokemonContext);
+  const dispatch = useDispatch();
+
   //아이디 세자리수 정렬
   const setThreeNum = String(list.id).padStart(3, "0");
 
@@ -18,7 +20,6 @@ const PokemonCard = ({ list, context }) => {
   /*
   자식이벤트발생 > 부모에 있으면 부모가 실행 : 이벤트 버블링
   stopPropagation자식에서 이벤트가 버블링되는거 막아줌
-
   */
 
   return (
@@ -28,11 +29,14 @@ const PokemonCard = ({ list, context }) => {
       <p>No. {setThreeNum}</p>
       <button
         onClick={(e) => {
+          //type : 액션 종류를나타내는 문자열
+          //payload : 액션과 함께 전달되는 데이터를 담고있음,
+
           e.stopPropagation();
-          if (context == "dashboard") {
-            handleAddandDel(list, "delete");
-          } else if (context == "list") {
-            handleAddandDel(list, "add");
+          if (context === "dashboard") {
+            dispatch(handleAddandDel({ pokemon: list, operation: "delete" }));
+          } else if (context === "list") {
+            dispatch(handleAddandDel({ pokemon: list, operation: "add" }));
           }
         }}
       >

@@ -1,12 +1,14 @@
-import { PokemonProvider } from "./context/pokemonContext";
+import { Provider } from "react-redux";
+import store from "./app/store";
+// import { PokemonProvider } from "./context/pokemonContext";
 import Router from "./shared/Router";
 
 function App() {
   return (
     <>
-      <PokemonProvider>
+      <Provider store={store}>
         <Router />
-      </PokemonProvider>
+      </Provider>
     </>
   );
 }

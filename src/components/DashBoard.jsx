@@ -1,13 +1,17 @@
-import { useContext } from "react";
+// import { useContext } from "react";
 import PokemonCard from "./PokemonCard";
 import PokemonList from "./PokemonList";
 import { styled } from "styled-components";
 import pokeball from "../image/pokebola-pokeball.png";
-import { PokemonContext } from "../context/pokemonContext";
+import { useSelector } from "react-redux";
+// import { PokemonContext } from "../context/pokemonContext";
 
 const DashBoard = () => {
-  const { selectList } = useContext(PokemonContext);
+  // const { selectList } = useContext(PokemonContext);
   // console.log(selectList);
+
+  //rtk
+  const selectList = useSelector((state) => state.pokemon.selectList);
   return (
     <Container>
       <h2>나만의 포켓몬</h2>

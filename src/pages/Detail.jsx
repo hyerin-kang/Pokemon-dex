@@ -1,6 +1,8 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import MOCK_DATA from "../js/mockData";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { handleAddandDel } from "../slices/pokemonSlice";
 
 const Detail = () => {
   const [searchParams] = useSearchParams();
@@ -12,7 +14,6 @@ const Detail = () => {
     return data.id == getQueryId;
   });
   console.log(findSameId);
-  // console.log(findPokemonId);
 
   //쿼리스트링을 가지고 와서 목데이터랑 같은거 출력해라
   /*
@@ -27,6 +28,9 @@ const Detail = () => {
     navigate("/dex");
   };
 
+  //추가버튼
+  const dispatch = useDispatch();
+
   return (
     <DetailContainer>
       <img src={`${findSameId.img_url}`} alt={`${findSameId.korean_name}`} />
@@ -35,6 +39,13 @@ const Detail = () => {
       <p>{findSameId.description}</p>
 
       <button onClick={handleGotoBack}>뒤로가기</button>
+      <button
+        onClick={() => {
+          dispatch(handleAddandDel({ pokemon: findSameId, operation: "add" }));
+        }}
+      >
+        포켓몬 추가
+      </button>
     </DetailContainer>
   );
 };
