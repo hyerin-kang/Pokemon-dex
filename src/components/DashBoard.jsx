@@ -2,7 +2,8 @@
 import PokemonCard from "./PokemonCard";
 import PokemonList from "./PokemonList";
 import { styled } from "styled-components";
-import pokeball from "../image/pokebola-pokeball.png";
+import pokeball from "../assets/image/pokeball.png";
+
 import { useSelector } from "react-redux";
 // import { PokemonContext } from "../context/pokemonContext";
 
@@ -18,6 +19,7 @@ const DashBoard = () => {
       <SelectLists>
         {/* 추가된거 */}
         {selectList.map((list) => {
+          console.log(selectList);
           return <PokemonCard context="dashboard" list={list} key={list.id} />;
         })}
         {/* 빈슬롯 

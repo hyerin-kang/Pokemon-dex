@@ -60,4 +60,21 @@ const PokemonCardLi = styled.li`
   border: 1px solid #ccc;
   min-width: calc((100% / 7) - 30px);
   box-sizing: border-box;
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 16px;
+    cursor: pointer;
+  }
+  button {
+    padding: 5px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    border: none;
+    background-color: rgb(255, 0, 0);
+    color: rgb(255, 255, 255);
+    border-radius: 5px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
 `;

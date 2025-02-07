@@ -1,26 +1,19 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import MOCK_DATA from "../js/mockData";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { handleAddandDel } from "../slices/pokemonSlice";
 
 const Detail = () => {
-  const [searchParams] = useSearchParams();
-  const getQueryId = searchParams.get("id");
+  //쿼리스트링을 가지고 와서 목데이터랑 같은거 출력해라
+  const [searchParams] = useSearchParams(); //쿼리스트링 파라미터
+  const getQueryId = searchParams.get("id"); //아이디 가져오기
 
-  const pokemonData = MOCK_DATA;
-
-  const findSameId = pokemonData.find(function (data) {
+  //id를 가진 포켓몬 찾기
+  const findSameId = MOCK_DATA.find(function (data) {
     return data.id == getQueryId;
   });
-  console.log(findSameId);
-
-  //쿼리스트링을 가지고 와서 목데이터랑 같은거 출력해라
-  /*
-쿼리스트링: key=value 형태의 문자열로 표현 (key=value 페어의 개수 제한은 없음)
-? : 쿼리스트링의 시작 표시 (start of parameters)
-& : key=value 페어 구분 표시 (separator)
-  */
+  // console.log(findSameId);
 
   //뒤로가기
   const navigate = useNavigate();
@@ -28,9 +21,15 @@ const Detail = () => {
     navigate("/dex");
   };
 
-  //추가버튼
+  //추가버튼 디스패치
   const dispatch = useDispatch();
 
+  //리스트확인
+  const selectList = useSelector((state) => state.pokemon.selectList);
+
+  const isPokemonSelected = selectList.some(function (list) {
+    return list.id === findSameId.id;
+  });
   return (
     <DetailContainer>
       <img src={`${findSameId.img_url}`} alt={`${findSameId.korean_name}`} />
@@ -41,10 +40,11 @@ const Detail = () => {
       <button onClick={handleGotoBack}>뒤로가기</button>
       <button
         onClick={() => {
-          dispatch(handleAddandDel({ pokemon: findSameId, operation: "add" }));
+          const operation = isPokemonSelected ? "delete" : "add";
+          dispatch(handleAddandDel({ pokemon: findSameId, operation }));
         }}
       >
-        포켓몬 추가
+        {isPokemonSelected ? "포켓몬 풀어주기" : "포켓몬 잡기"}
       </button>
     </DetailContainer>
   );
@@ -59,6 +59,7 @@ const DetailContainer = styled.div`
   flex-direction: column;
   gap: 20px;
   height: 100vh;
+
   .pokemonName {
     color: rgb(255, 0, 0);
     font-weight: 600;
