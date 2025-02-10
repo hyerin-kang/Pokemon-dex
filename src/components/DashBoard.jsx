@@ -19,7 +19,6 @@ const DashBoard = () => {
       <SelectLists>
         {/* 추가된거 */}
         {selectList.map((list) => {
-          console.log(selectList);
           return <PokemonCard context="dashboard" list={list} key={list.id} />;
         })}
         {/* 빈슬롯 

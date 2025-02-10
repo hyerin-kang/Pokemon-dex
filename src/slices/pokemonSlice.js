@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import Swal from "sweetalert2";
 
 //초기값
 const initialState = {
@@ -19,17 +20,27 @@ const pokemonSlice = createSlice({
         case "add":
           // 포켓몬이 6마리 이상이면 추가안함
           if (state.selectList.length >= 6) {
-            alert("포켓몬은 6마리까지 잡을수있어요!");
+            // alert("포켓몬은 6마리까지 잡을수있어요!");
+            Swal.fire({
+              title: "포켓몬은 6마리까지 잡을수있어요!",
+              icon: "error",
+            });
             return;
           }
           // 이미 선택된 포켓몬이면 추가안함
           if (state.selectList.some((list) => list.id === pokemon.id)) {
-            alert("이미 잡은 포켓몬입니다!");
+            Swal.fire({
+              title: "이미 잡은 포켓몬 입니다!",
+              icon: "error",
+            });
             return;
           }
 
           state.selectList.push(pokemon);
-          alert("포켓몬을 잡았어요!");
+          Swal.fire({
+            title: "포켓몬을 잡았어요!",
+            icon: "success",
+          });
           break;
 
         case "delete":
@@ -37,6 +48,11 @@ const pokemonSlice = createSlice({
           state.selectList = state.selectList.filter(
             (list) => list.id !== pokemon.id
           );
+          Swal.fire({
+            title: "포켓몬을 풀어줬어요",
+            icon: "info",
+            draggable: true,
+          });
           break;
 
         default:
