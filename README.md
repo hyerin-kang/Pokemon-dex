@@ -1,6 +1,12 @@
 <!-- ####### 헤더 -->
 
 # :hatching_chick: 나만의 Pokemon Dex 만들기
+
+### :house: 배포
+```bash
+https://pokemon-dex-three.vercel.app/
+```
+<br/>
 <!-- ####### 프로젝트 소개 -->
 
 <!-- 기간 -->
