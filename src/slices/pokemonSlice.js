@@ -2,8 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 import Swal from "sweetalert2";
 
 //초기값
+const formLocalStorage = () => {
+  const savedPokemons = localStorage.getItem("selectedPokemons");
+  return savedPokemons ? JSON.parse(savedPokemons) : [];
+};
 const initialState = {
-  selectList: [],
+  selectList: formLocalStorage(),
 };
 
 const pokemonSlice = createSlice({
@@ -41,6 +45,11 @@ const pokemonSlice = createSlice({
             title: "포켓몬을 잡았어요!",
             icon: "success",
           });
+          //로컬스토리지
+          localStorage.setItem(
+            "selectedPokemons",
+            JSON.stringify(state.selectList)
+          );
           break;
 
         case "delete":
@@ -53,6 +62,11 @@ const pokemonSlice = createSlice({
             icon: "info",
             draggable: true,
           });
+          //로컬스토리지
+          localStorage.setItem(
+            "selectedPokemons",
+            JSON.stringify(state.selectList)
+          );
           break;
 
         default:
